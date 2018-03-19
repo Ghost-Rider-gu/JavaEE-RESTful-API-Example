@@ -134,7 +134,7 @@
         <lombok.version>1.16.18</lombok.version>
         <slf4j.version>1.7.25</slf4j.version>
         <dbutils.version>1.7</dbutils.version>
-        <h2.version>1.4.196</h2.version>
+        <h2.version>1.4.195</h2.version>
         <jersey.version>2.7</jersey.version>
         <jetty.version>9.4.8.v20171121</jetty.version>
         <httpclient.version>4.5.5</httpclient.version>
