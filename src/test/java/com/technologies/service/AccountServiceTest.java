@@ -27,12 +27,12 @@ public class AccountServiceTest extends ServiceTest {
     private URIBuilder uriBuilder = new URIBuilder().setScheme("http").setHost("localhost:8088");
     private ObjectMapper mapper = new ObjectMapper();
 
-    private final String WRONG_ACCOUNT_ID = "/Account/12345";
-    private final String GET_ALL_ACCOUNTS = "/Account";
-    private final String UPDATE_ACCOUNT = "/Account/1";
-    private final String ADD_ACCOUNT = "/Account/add";
-    private final String DELETE_ACCOUNT = "/Account/1";
-    private final String TRANSFER_BALANCE = "/Account/transfer/125";
+    private final String WRONG_ACCOUNT_ID = "/account/12345";
+    private final String GET_ALL_ACCOUNTS = "/account";
+    private final String UPDATE_ACCOUNT = "/account/1";
+    private final String ADD_ACCOUNT = "/account/add";
+    private final String DELETE_ACCOUNT = "/account/1";
+    private final String TRANSFER_BALANCE = "/account/transfer/1/2/456";
 
     @Test
     public void testShouldNotGetAccountById() throws IOException, URISyntaxException {
@@ -101,6 +101,16 @@ public class AccountServiceTest extends ServiceTest {
         URI uri = uriBuilder.setPath(DELETE_ACCOUNT).build();
         HttpDelete request = new HttpDelete(uri);
         request.setHeader("Content-type", "application/json");
+        HttpResponse response = httpClient.execute(request);
+        int statusCode = response.getStatusLine().getStatusCode();
+
+        assertTrue(statusCode == 200);
+    }
+
+    @Test
+    public void testTransferBalance() throws IOException, URISyntaxException {
+        URI uri = uriBuilder.setPath(TRANSFER_BALANCE).build();
+        HttpGet request = new HttpGet(uri);
         HttpResponse response = httpClient.execute(request);
         int statusCode = response.getStatusLine().getStatusCode();
 

@@ -21,9 +21,9 @@ import java.util.List;
 /**
  * Resources for user.
  */
-@Path("/User")
-@Produces(MediaType.APPLICATION_JSON)
 @Slf4j
+@Path("/user")
+@Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
     @Inject
@@ -46,27 +46,6 @@ public class UserResource {
 
         if (user == null) {
             throw new WebApplicationException("User with id: " + userId + " not found", Response.Status.NOT_FOUND);
-        }
-        return user;
-    }
-
-    /**
-     * API - /User/John for get user by name
-     *
-     * @param userName {@link String}
-     *
-     * @return User
-     *
-     * @throws AccountTransferException
-     */
-    @GET
-    @Path("/{userName}")
-    public User getUserByName(@PathParam("userName") String userName) throws AccountTransferException {
-        log.info("Getting user by name");
-        User user = userService.getUserByName(userName);
-
-        if (user == null) {
-            throw new WebApplicationException("User with name: " + userName + " not found", Response.Status.NOT_FOUND);
         }
         return user;
     }

@@ -3,6 +3,7 @@ package com.technologies.service;
 import com.technologies.config.DbConfig;
 import com.technologies.exception.AccountTransferException;
 import com.technologies.model.User;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbutils.DbUtils;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * CRUD for user entity.
  */
 @Slf4j
+@NoArgsConstructor
 public class UserService {
 
     private final String GET_USER_BY_ID = "SELECT * FROM User WHERE userId = ? ";

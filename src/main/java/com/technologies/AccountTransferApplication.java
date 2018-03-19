@@ -1,8 +1,8 @@
 package com.technologies;
 
 import com.technologies.config.DbConfig;
-import com.technologies.service.AccountService;
-import com.technologies.service.UserService;
+import com.technologies.resource.AccountResource;
+import com.technologies.resource.UserResource;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -34,7 +34,7 @@ public class AccountTransferApplication {
         server.setHandler(context);
         ServletHolder servletHolder = context.addServlet(ServletContainer.class, "/*");
         servletHolder.setInitParameter("jersey.config.server.provider.classnames",
-                UserService.class.getCanonicalName() + "," + AccountService.class.getCanonicalName());
+                UserResource.class.getCanonicalName() + "," + AccountResource.class.getCanonicalName());
         try {
             server.start();
             server.join();

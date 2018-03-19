@@ -1,6 +1,8 @@
 package com.technologies.service;
 
 import com.technologies.config.DbConfig;
+import com.technologies.resource.AccountResource;
+import com.technologies.resource.UserResource;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.HttpClients;
@@ -25,8 +27,8 @@ public abstract class ServiceTest {
 
     @BeforeClass
     public static void setupTest() throws Exception {
-        runServer();
         DbConfig.getConnection();
+        runServer();
         connectionManager.setDefaultMaxPerRoute(80);
         connectionManager.setMaxTotal(100);
         httpClient = HttpClients.custom().setConnectionManager(connectionManager).setConnectionManagerShared(true).build();
@@ -51,7 +53,7 @@ public abstract class ServiceTest {
             server.setHandler(context);
             ServletHolder servletHolder = context.addServlet(ServletContainer.class, "/*");
             servletHolder.setInitParameter("jersey.config.server.provider.classnames",
-                    UserService.class.getCanonicalName() + "," + AccountService.class.getCanonicalName());
+                    UserResource.class.getCanonicalName() + "," + AccountResource.class.getCanonicalName());
             server.start();
         }
     }

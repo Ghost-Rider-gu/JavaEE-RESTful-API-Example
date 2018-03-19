@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Resources for account.
  */
-@Path("/Account")
+@Path("/account")
 @Produces(MediaType.APPLICATION_JSON)
 @Slf4j
 public class AccountResource {
@@ -120,8 +120,10 @@ public class AccountResource {
     }
 
     @POST
-    @Path("/transfer/{amount}")
-    public Response transferBalance(@PathParam("amount") BigDecimal amount, Account fromAccount, Account toAccount) throws AccountTransferException {
+    @Path("/transfer/{fromAccountId}/{toAccountId}/{amount}")
+    public Response transferBalance(@PathParam("fromAccountId") Long fromAccount,
+                                    @PathParam("toAccountId") Long toAccount,
+                                    @PathParam("amount") BigDecimal amount) throws AccountTransferException {
         accountService.transferBalance(fromAccount, toAccount, amount);
         return Response.status(Response.Status.OK).build();
     }

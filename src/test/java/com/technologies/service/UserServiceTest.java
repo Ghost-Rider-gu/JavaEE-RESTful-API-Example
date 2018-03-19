@@ -26,12 +26,11 @@ public class UserServiceTest extends ServiceTest {
     private URIBuilder uriBuilder = new URIBuilder().setScheme("http").setHost("localhost:8088");
     private ObjectMapper mapper = new ObjectMapper();
 
-    private final String WRONG_USER_ID = "/User/12345";
-    private final String GET_ALL_USERS = "/User";
-    private final String GET_USER_BY_NAME = "/User/John Cook";
-    private final String UPDATE_USER = "/User/1";
-    private final String ADD_USER = "/User/add";
-    private final String DELETE_USER = "/User/1";
+    private final String WRONG_USER_ID = "/user/12345";
+    private final String GET_ALL_USERS = "/user";
+    private final String UPDATE_USER = "/user/1";
+    private final String ADD_USER = "/user/add";
+    private final String DELETE_USER = "/user/1";
 
     @Test
     public void testShouldNotGetUserById() throws IOException, URISyntaxException {

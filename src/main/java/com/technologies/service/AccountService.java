@@ -4,6 +4,7 @@ import com.technologies.config.DbConfig;
 import com.technologies.exception.AccountTransferException;
 import com.technologies.model.Account;
 import com.technologies.model.User;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbutils.DbUtils;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * CRUD for account entity.
  */
 @Slf4j
+@NoArgsConstructor
 public class AccountService {
 
     private final String GET_ACCOUNT_BY_ID = "SELECT * FROM Account WHERE accountId = ? ";
@@ -186,7 +188,7 @@ public class AccountService {
      *
      * @throws AccountTransferException
      */
-    public void transferBalance(Account fromAccountId, Account toAccountId, BigDecimal amount) throws AccountTransferException {
+    public void transferBalance(Long fromAccountId, Long toAccountId, BigDecimal amount) throws AccountTransferException {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement updateStatement = null;
@@ -199,7 +201,7 @@ public class AccountService {
             conn.setAutoCommit(false);
             // lock the credit and debit account for writing:
             preparedStatement = conn.prepareStatement(TRANSFER_BALANCE);
-            preparedStatement.setLong(1, fromAccountId.getAccountId());
+            preparedStatement.setLong(1, fromAccountId);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 fromAccount = new Account();
@@ -209,7 +211,7 @@ public class AccountService {
             }
 
             preparedStatement = conn.prepareStatement(TRANSFER_BALANCE);
-            preparedStatement.setLong(1, toAccountId.getAccountId());
+            preparedStatement.setLong(1, toAccountId);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 toAccount = new Account();
@@ -224,12 +226,12 @@ public class AccountService {
             }
 
             updateStatement = conn.prepareStatement(UPDATE_ACCOUNT);
-            updateStatement.setString(1, fromAccountId.getAccountNumber());
+            updateStatement.setString(1, fromAccount.getAccountNumber());
             updateStatement.setBigDecimal(2, leftMoney);
-            updateStatement.setLong(3, fromAccountId.getAccountId());
+            updateStatement.setLong(3, fromAccount.getAccountId());
             updateStatement.addBatch();
 
-            updateStatement.setString(2, fromAccountId.getAccountNumber());
+            updateStatement.setString(2, toAccount.getAccountNumber());
             updateStatement.setBigDecimal(1, toAccount.getAccountBalance().add(amount));
             updateStatement.setLong(3, toAccount.getAccountId());
             updateStatement.addBatch();
